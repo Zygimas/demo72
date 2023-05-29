@@ -43,19 +43,19 @@ public class Demo72Application implements CommandLineRunner {
 
     @Bean
     public UserDetailsService inMemoryUserDetailsService() {
-        UserDetails min = User
-                .withUsername("min")
-                .password(passwordEncoder().encode("min"))
+        UserDetails god = User
+                .withUsername("god")
+                .password(passwordEncoder().encode("god"))
                 .roles("USER")
                 .build();
 
         UserDetails sup = User
-                .withUsername("super")
-                .password(passwordEncoder().encode("super"))
-                .roles("USER", "ADMIN")
+                .withUsername("sup")
+                .password(passwordEncoder().encode("sup"))
+                .roles("ADMIN")
                 .build();
 
-        return new InMemoryUserDetailsManager(min, sup);
+        return new InMemoryUserDetailsManager(god, sup);
     }
 
     @Override
