@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+      <title>Registration ✌</title>
+    <style>
+      body {
+        background-color: #f2f2cc;
+        max-width: 450px;
+        margin: 0 auto;
+      }
+      .green-button {
+        background-color: green;
+        color: white;
+      }
+      .blue-button {
+        background-color: blue;
+        color: white;
+      }
+    </style>
+    <script>
+      function changeLanguage() {
+        var languageStrings = {};
+        var signupTitle = document.getElementById('signup-title');
+        var languageToggle = document.getElementById('language-toggle');
+        var usernameLabel = document.getElementById('username-label');
+        var passwordLabel = document.getElementById('password-label');
+        var registerButton = document.getElementById('register-button');
+        var returnButton = document.getElementById('return-button');
+
+        if (languageToggle.textContent === 'Change Language') {
+          languageStrings = {
+            signupTitle: 'Prisiregistruokite ✌',
+           buttonChangeLanguage: 'Keisti kalbą',
+            usernameLabel: 'Vartotojo vardas',
+            passwordLabel: 'Slaptažodis',
+            registerButtonLabel: 'Registruotis',
+            returnButtonLabel: 'Grįžti'
+          };
+        } else {
+          languageStrings = {
+            signupTitle: 'Please Sign Up! ✌',
+            buttonChangeLanguage: 'Change Language',
+            usernameLabel: 'Username',
+            passwordLabel: 'Password',
+            registerButtonLabel: 'Register',
+            returnButtonLabel: 'Return'
+          };
+        }
+        signupTitle.textContent = languageStrings.signupTitle;
+        languageToggle.textContent = languageStrings.buttonChangeLanguage;
+        usernameLabel.textContent = languageStrings.usernameLabel;
+        passwordLabel.textContent = languageStrings.passwordLabel;
+        registerButton.value = languageStrings.registerButtonLabel;
+        returnButton.textContent = languageStrings.returnButtonLabel;
+      }
+    </script>
+  </head>
+  <body>
+    <div>
+      <h2 id="signup-title">Please Sign Up! ✌</h2>
+      <form action="#" th:action="@{/signup}" th:object="${user}" method="post">
+        <p th:field="*{username}">
+        <label id="username-label">Username:</label>
+        <input type="text" name="username" required />
+        </p>
+        <p th:field="*{password}">
+          <label id="password-label">Password:</label>
+          <input type="password" name="password" required />
+        </p>
+        <p>
+          <input class="green-button" id="register-button" type="submit" value="Register">
+        </p>
+        <button class="blue-button" id="return-button" type="submit">Return</button>
+        <input type="hidden" id="original-username-input" th:value="${user.username}"/>
+        <input type="hidden" id="original-password-input" th:value="${user.password}"/>
+    </form>
+      <p></p>
+      <tr>
+        <td>
+          <a id="language-toggle" href="javascript:void(0);" onclick="changeLanguage()">Change Language</a>
+        </td>
+      </tr>
+    </div>
+  </body>
+</html>

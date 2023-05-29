@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+      <title>AdminDirectory 🌴</title>
+    <style>
+      body {
+        background-color: #ffe6e6;
+        display: flex;
+        justify-content: center;
+      }
+      .red-button {
+        background-color: red;
+        color: white;
+      }
+      .green-button {
+        background-color: green;
+        color: white;
+      }
+      .blue-button {
+        background-color: blue;
+        color: white;
+      }
+      table {
+        margin-top: 50px;
+      }
+    </style>
+    <script>
+      function changeLanguage() {
+        var languageStrings = {};
+        var languageToggle = document.getElementById('language-toggle');
+        var adminDirectoryTitle = document.getElementById('admin-directory-title');
+        var returnLink = document.getElementById('return-link');
+        var usernameLabel = document.getElementById('username-label');
+        var roleLabel = document.getElementById('role-label');
+        var actionsLabel = document.getElementById('actions-label');
+        var promoteButtonLabel = document.querySelectorAll('.promote-button-label');
+        var demoteButtonLabel = document.querySelectorAll('.demote-button-label');
+        var deleteButtonLabel = document.querySelectorAll('.delete-button-label');
+
+        if (languageToggle.textContent === 'Change Language') {
+          languageStrings = {
+            buttonChangeLanguage: 'Keisti kalbą',
+            adminDirectoryTitle: 'Administratoriaus katalogas 🌴',
+            returnLinkText: 'Grįžti',
+            usernameLabel: 'Vartotojo vardas',
+            roleLabel: 'Rolė',
+            actionsLabel: 'Veiksmai',
+            promoteButtonLabel: 'Pakelti iki administratoriaus',
+            demoteButtonLabel: 'Nuleisti iki vartotojo',
+            deleteButtonLabel: 'Ištrinti'
+          };
+        } else {
+          languageStrings = {
+            buttonChangeLanguage: 'Change Language',
+            adminDirectoryTitle: 'Admin Directory 🌴',
+            returnLinkText: 'Return',
+            usernameLabel: 'Username',
+            roleLabel: 'Role',
+            actionsLabel: 'Actions',
+            promoteButtonLabel: 'Promote to Admin',
+            demoteButtonLabel: 'Demote to User',
+            deleteButtonLabel: 'Delete'
+          };
+        }
+        languageToggle.textContent = languageStrings.buttonChangeLanguage;
+        adminDirectoryTitle.textContent = languageStrings.adminDirectoryTitle;
+        returnLink.textContent = languageStrings.returnLinkText;
+        usernameLabel.textContent = languageStrings.usernameLabel;
+        roleLabel.textContent = languageStrings.roleLabel;
+        actionsLabel.textContent = languageStrings.actionsLabel;
+
+        for (var i = 0; i < promoteButtonLabel.length; i++) {
+          promoteButtonLabel[i].textContent = languageStrings.promoteButtonLabel;
+        }
+        for (var i = 0; i < demoteButtonLabel.length; i++) {
+          demoteButtonLabel[i].textContent = languageStrings.demoteButtonLabel;
+        }
+        for (var i = 0; i < deleteButtonLabel.length; i++) {
+          deleteButtonLabel[i].textContent = languageStrings.deleteButtonLabel;
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <h1 id="admin-directory-title">AdminDirectory 🌴</h1>
+      <div>
+        <a id="return-link" href="/home">Return</a>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th id="username-label">Username</th>
+            <th id="role-label">Role</th>
+            <th id="actions-label">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr th:each="user : ${users}">
+              <td th:text="${user.username}"></td>
+              <td th:text="${user.role}"></td>
+            <td>
+              <form th:action="@{/change-role/{userId}/{newRole}(userId=${user.id},newRole='ADMIN')}" method="post">
+                <button type="submit" class="green-button promote-button-label">Promote to Admin</button>
+              </form>
+              <form th:action="@{/change-role/{userId}/{newRole}(userId=${user.id},newRole='USER')}" method="post">
+                <button type="submit" class="blue-button demote-button-label">Demote to User</button>
+              </form>
+              <form th:action="@{/delete-user/{userId}(userId=${user.id})}" method="post">
+                <button type="submit" class="red-button delete-button-label">Delete</button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+            <td>
+              <p>
+              <a id="language-toggle" href="javascript:void(0);" onclick="changeLanguage()">Change Language</a>
+              </p>
+            </td>
+      </table>
+  </body>
+</html>

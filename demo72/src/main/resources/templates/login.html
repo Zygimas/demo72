@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+      <title>Login 🔑</title>
+    <style>
+      body {
+        background-color: #e6f7ff;
+        max-width: 450px;
+        margin: 0 auto;
+      }
+      .green-button {
+        background-color: green;
+        color: white;
+      }
+    </style>
+    <script>
+      function changeLanguage() {
+        var languageStrings = {};
+        var loginTitle = document.getElementById('login-title');
+        var languageToggle = document.getElementById('language-toggle');
+        var usernameLabel = document.getElementById('username-label');
+        var passwordLabel = document.getElementById('password-label');
+        var loginButton = document.getElementById('login-button');
+        var signUpLink = document.getElementById('signup-link');
+
+        if (languageToggle.textContent === 'Change Language') {
+          languageStrings = {
+            buttonChangeLanguage: 'Keisti kalbą',
+            usernameLabel: 'Vartotojo vardas',
+            passwordLabel: 'Slaptažodis',
+            loginTitle: 'Prisijungimas 🔑',
+            loginButtonLabel: 'Prisijungti',
+            signUpLinkText: 'Neturite paskyros? Registruokitės'
+        };
+      } else {
+        languageStrings = {
+          buttonChangeLanguage: 'Change Language',
+          usernameLabel: 'Username',
+          passwordLabel: 'Password',
+          loginTitle: 'Login 🔑',
+          loginButtonLabel: 'Login',
+          signUpLinkText: 'You do not have an account? Sign Up'
+          };
+        }
+        languageToggle.textContent = languageStrings.buttonChangeLanguage;
+        loginTitle.textContent = languageStrings.loginTitle;
+        usernameLabel.textContent = languageStrings.usernameLabel;
+        passwordLabel.textContent = languageStrings.passwordLabel;
+        loginButton.value = languageStrings.loginButtonLabel;
+        signUpLink.textContent = languageStrings.signUpLinkText;
+      }
+    </script>
+  </head>
+  <body>
+    <div style="max-width: 450px; margin: 0 auto;">
+      <h1 id="login-title">Login page 🔑</h1>
+        <form th:action="@{/login}" method="POST">
+          <div th:if="${param.error}">
+            <div style="color: red">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</div>
+          </div>
+          <p>
+            <label id="username-label">Username:</label>
+            <input type="text" name="username" required />
+          </p>
+          <p>
+            <label id="password-label">Password:</label>
+            <input type="password" name="password" required />
+          </p>
+          <p>
+            <input class="green-button" type="submit" value="Login" id="login-button">
+          </p>
+          <p>
+            <a th:href="@{/signup}" id="signup-link" class="btn btn-link">You don't have an account? Sign Up</a>
+          </p>
+        </form>
+          <p>
+            <a id="language-toggle" href="javascript:void(0);" onclick="changeLanguage()">Change Language</a>
+          </p>
+    </div>
+  </body>
+</html>
